@@ -1,17 +1,16 @@
 'use client'
 
-import { Input, Button, Link } from '@heroui/react'
+import { Input, Button, Link, Form } from '@heroui/react'
 import LockIcon from '@/components/icons/lock'
 import UserIcon from '@/components/icons/user'
-import MoneybagIcon from '@/components/icons/moneybag'
 
 export default function Login() {
   return (
-    <main className="h-screen flex">
-      <section className="h-full w-[40%] grid place-content-center">
-        <div className="h-full w-96 max-w-96">
+    <main className="h-screen flex flex-col lg:flex-row">
+      <section className="h-full lg:w-[40%] grid place-content-center">
+        <div className="h-full w-96 max-w-96 p-10">
           <h1 className="text-2xl mb-6 font-medium text-center">Iniciar Sesion en CashFlowly</h1>
-          <form action="submit" className="flex flex-col gap-4 items-center">
+          <Form className="flex flex-col gap-4 items-center">
             <Input
               type="email"
               placeholder="Correo Electronico"
@@ -26,8 +25,10 @@ export default function Login() {
             <Link href="#" underline="always" className="text-sm text-black">
               ¿Olvidaste tu contraseña?
             </Link>
-            <Button className="bg-teal-800 text-white">Iniciar sesión</Button>
-          </form>
+            <Button type="submit" className="bg-teal-800 text-white">
+              Iniciar sesión
+            </Button>
+          </Form>
         </div>
       </section>
       <section className="h-full grow bg-gradient-to-br from-teal-900 to-sky-900 grid place-content-center">
