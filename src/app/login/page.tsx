@@ -10,7 +10,7 @@ export default function Login() {
       <section className="h-full lg:w-[40%] grid place-content-center">
         <div className="h-full w-96 max-w-96 p-10">
           <h1 className="text-2xl mb-6 font-medium text-center">Iniciar Sesion en CashFlowly</h1>
-          <Form className="flex flex-col gap-4 items-center">
+          <Form validationBehavior="native" className="flex flex-col gap-4 items-center">
             <Input
               type="email"
               placeholder="Correo Electronico"
@@ -40,7 +40,7 @@ export default function Login() {
             haz crecer tu dinero de forma inteligente. Únete ahora y comienza a mejorar tu futuro
             financiero.
           </p>
-          <Button href="#" className="self-start text-white" as={Link} variant="bordered">
+          <Button href="/signup" className="self-start text-white" as={Link} variant="bordered">
             Registrarse
           </Button>
         </div>
