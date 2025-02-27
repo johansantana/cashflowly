@@ -1,4 +1,4 @@
-import Dashboard from '@/components/ui/dashboard'
+import Dashboard from '@/components/ui/incomes/dashboard'
 
 export default function Incomes() {
   return (

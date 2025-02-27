@@ -3,6 +3,7 @@
 import { Input, Button, Link, Form } from '@heroui/react'
 import LockIcon from '@/components/icons/lock'
 import UserIcon from '@/components/icons/user'
+import { signIn } from '@/auth'
 
 export default function Login() {
   return (
@@ -10,7 +11,14 @@ export default function Login() {
       <section className="h-full lg:w-[40%] grid place-content-center">
         <div className="h-full w-96 max-w-96 p-10">
           <h1 className="text-2xl mb-6 font-medium text-center">Iniciar Sesion en CashFlowly</h1>
-          <Form validationBehavior="native" className="flex flex-col gap-4 items-center">
+          <Form
+            validationBehavior="native"
+            className="flex flex-col gap-4 items-center"
+            onSubmit={async formData => {
+              'use server'
+              await signIn('credentials', formData)
+            }}
+          >
             <Input
               type="email"
               placeholder="Correo Electronico"

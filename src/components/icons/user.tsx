@@ -1,10 +1,10 @@
 import React from 'react'
 
 interface UserIconProps extends React.SVGProps<SVGSVGElement> {
-  isCircled: boolean
+  isCircled?: boolean
 }
 
-export default function UserIcon({ isCircled, ...props }: UserIconProps) {
+export default function UserIcon({ isCircled = true, ...props }: UserIconProps) {
   return isCircled ? (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import {
   Table,
@@ -14,7 +16,7 @@ export default function DashboardTable() {
     <div className="flex flex-col gap-3">
       <Table
         aria-label="Historial de ingresos"
-        color="success"
+        color="default"
         defaultSelectedKeys={['2', '3']}
         selectionMode="multiple"
       >

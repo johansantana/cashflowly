@@ -1,4 +1,4 @@
-import Dashboard from '@/components/ui/dashboard'
+import Dashboard from '@/components/ui/budget/dashboard'
 
 export default function Budget() {
   return (
