@@ -21,7 +21,7 @@ export default function Dashboard(props: DashboardProps) {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-semibold text-slate-900">{title}</h1>
         <div className="flex gap-4">
-          <Button radius="full" className="bg-sky-700 text-white" startContent={<PlusIcon />}>
+          <Button radius="full" className="bg-lightDustyRose text-white" startContent={<PlusIcon />}>
             Registrar Ingreso
           </Button>
           <Button radius="full" startContent={<ReportIcon />}>
@@ -33,14 +33,16 @@ export default function Dashboard(props: DashboardProps) {
         <DashboardCard>
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col gap-1">
-              <span className="uppercase text-sm font-semibold text-sky-700">Ingreso del mes</span>
-              <span className="font-semibold text-lg lg:text-xl max-w-[20ch] text-slate-900">
+              <span className="text-lg font-semibold text-darkGreen2">Ingreso del mes</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="font-semibold text-lg lg:text-sm max-w-[20ch] text-slate-900">
                 Aumento del 2.7% desde el último mes.
               </span>
             </div>
-            <div className="font-bold text-sky-700 flex gap-2 items-end">
+            <div className="font-bold text-greenglows flex gap-2 items-end">
               <span className="text-xl xl:text-2xl">RD$</span>
-              <span className="text-3xl xl:text-4xl">50,000.00</span>
+              <span className="text-3xl xl:text-2xl">50,000.00</span>
               <CaretUpIcon />
             </div>
           </div>
@@ -48,33 +50,36 @@ export default function Dashboard(props: DashboardProps) {
         <DashboardCard>
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col gap-2">
-              <span className="uppercase text-sm font-semibold text-sky-700">
+              <span className="text-lg font-semibold text-darkGreen2">
                 Balance total del mes
               </span>
             </div>
-            <div className="font-bold text-sky-700 flex gap-2 items-end">
-              <span className="text-xl xl:text-3xl">RD$</span>
-              <span className="text-3xl xl:text-5xl">50,000.00</span>
+            <div className="font-bold text-sky-700 flex gap-2 items-end max-w-[20ch] text-slate-900">
+              <span className="text-xl xl:text-2xl">RD$</span>
+              <span className="text-3xl xl:text-2xl">50,000.00</span>
             </div>
           </div>
         </DashboardCard>
         <DashboardCard>
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col gap-2">
-              <span className="uppercase text-sm font-semibold text-sky-700">
+              <span className="text-lg font-semibold text-darkGreen2">
                 Ingreso más alto de los últimos meses
               </span>
+              
+            </div>
+            <div className="flex flex-col gap-2">
               <span className="uppercase text-sm font-semibold">Diciembre 2024</span>
             </div>
-            <div className="font-bold text-sky-700 flex gap-2 items-end">
-              <span className="text-xl xl:text-3xl">RD$</span>
-              <span className="text-3xl xl:text-5xl">90,000.00</span>
+            <div className="font-bold text-greenglows flex gap-2 items-end">
+              <span className="text-xl xl:text-2xl">RD$</span>
+              <span className="text-3xl xl:text-2xl">90,000.00</span>
               <ArrowUpRightIcon className="self-start" />
             </div>
           </div>
         </DashboardCard>
         <div className="col-span-3 flex gap-4">
-          <DashboardCard className="w-[60%] bg-sky-300" variant="lightColored" />
+          <DashboardCard className="w-[60%] bg-mutedGreen" variant="lightColored" />
           <DashboardCard className="w-full">
             <DashboardTable />
           </DashboardCard>
@@ -83,7 +88,7 @@ export default function Dashboard(props: DashboardProps) {
           <DashboardCard className="w-full">
             <DashboardAreaChart />
           </DashboardCard>
-          <DashboardCard className="w-[40%] bg-sky-300" variant="lightColored" />
+          <DashboardCard className="w-[40%] bg-mutedGreen" variant="lightColored" />
         </div>
       </div>
     </div>

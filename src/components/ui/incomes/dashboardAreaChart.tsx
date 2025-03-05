@@ -67,9 +67,9 @@ export default function DashboardAreaChart() {
             <Area
               dataKey="incomes"
               type="natural"
-              fill="var(--color-incomes)"
+              fill="#A43534"
               fillOpacity={0.4}
-              stroke="var(--color-incomes)"
+              stroke="#A43534"
             />
           </AreaChart>
         </ChartContainer>

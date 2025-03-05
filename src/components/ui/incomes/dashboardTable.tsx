@@ -29,28 +29,28 @@ export default function DashboardTable() {
           <TableRow key="1">
             <TableCell>8 Feb</TableCell>
             <TableCell>
-              <Chip className="bg-emerald-200">Sueldo</Chip>
+              <Chip className="bg-lightBrown">Sueldo</Chip>
             </TableCell>
             <TableCell>40,000.00</TableCell>
           </TableRow>
           <TableRow key="2">
             <TableCell>10 Ene</TableCell>
             <TableCell>
-              <Chip className="bg-sky-200">Bonos</Chip>
+              <Chip className="bg-lightDustyRose">Bonos</Chip>
             </TableCell>
             <TableCell>13,000.00</TableCell>
           </TableRow>
           <TableRow key="3">
             <TableCell>1 Ene</TableCell>
             <TableCell>
-              <Chip className="bg-emerald-200">Sueldo</Chip>
+              <Chip className="bg-lightBrown">Sueldo</Chip>
             </TableCell>
             <TableCell>40,000.00</TableCell>
           </TableRow>
           <TableRow key="4">
             <TableCell>28 Dic</TableCell>
             <TableCell>
-              <Chip className="bg-emerald-200">Sueldo</Chip>
+              <Chip className="bg-lightBrown">Sueldo</Chip>
             </TableCell>
             <TableCell>40,000.00</TableCell>
           </TableRow>

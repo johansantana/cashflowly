@@ -51,7 +51,17 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+			darkGreen: '#1D352D',
+			darkGreen2: '#015433',
+			lightGreen: '#A1C6B7',
+			beige: '#F2E1C1',
+			mutedGreen: '#4A6A5D',
+			softBrown: '#B78F5A',
+			lightBrown: '#eec48d',
+			dustyRose: '#A43534',
+			lightDustyRose: '#dc6c6b',
+			greenglows: '#04a82f',
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
