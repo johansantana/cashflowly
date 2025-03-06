@@ -26,7 +26,7 @@ export default function DashboardTable() {
         <TableBody>
           <TableRow key="1">
             <TableCell>
-              <Chip className="bg-gray-200">Alimentación</Chip>
+              <Chip className="bg-lightBrown">Alimentación</Chip>
             </TableCell>
             <TableCell>5,000.00</TableCell>
             <TableCell>2,000.00</TableCell>
@@ -38,7 +38,7 @@ export default function DashboardTable() {
           </TableRow>
           <TableRow key="2">
             <TableCell>
-              <Chip className="bg-green-200">Transporte</Chip>
+              <Chip className="bg-lightBrown">Transporte</Chip>
             </TableCell>
             <TableCell>3,500.00</TableCell>
             <TableCell>1,500.00</TableCell>
@@ -50,7 +50,7 @@ export default function DashboardTable() {
           </TableRow>
           <TableRow key="3">
             <TableCell>
-              <Chip className="bg-blue-200">Vivienda</Chip>
+              <Chip className="bg-lightBrown">Vivienda</Chip>
             </TableCell>
             <TableCell>10,000.00</TableCell>
             <TableCell>10,000.00</TableCell>
@@ -62,7 +62,7 @@ export default function DashboardTable() {
           </TableRow>
           <TableRow key="4">
             <TableCell>
-              <Chip className="bg-amber-200">Servicios basicos</Chip>
+              <Chip className="bg-lightBrown">Servicios basicos</Chip>
             </TableCell>
             <TableCell>6,000.00</TableCell>
             <TableCell>5,000.00</TableCell>
@@ -74,7 +74,7 @@ export default function DashboardTable() {
           </TableRow>
           <TableRow key="5">
             <TableCell>
-              <Chip className="bg-pink-200">Salud y bienestar</Chip>
+              <Chip className="bg-lightBrown">Salud y bienestar</Chip>
             </TableCell>
             <TableCell>4,000.00</TableCell>
             <TableCell>3,000.00</TableCell>

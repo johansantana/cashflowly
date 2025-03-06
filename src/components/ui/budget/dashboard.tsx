@@ -20,7 +20,7 @@ export default function Dashboard(props: DashboardProps) {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-semibold text-slate-900">{title}</h1>
         <div className="flex gap-4">
-          <Button radius="full" className="bg-emerald-700 text-white" startContent={<PlusIcon />}>
+          <Button radius="full" className="bg-lightDustyRose text-white" startContent={<PlusIcon />}>
             Registrar Presupuesto
           </Button>
           <Button radius="full" startContent={<ReportIcon />}>
@@ -32,16 +32,18 @@ export default function Dashboard(props: DashboardProps) {
         <DashboardCard>
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col gap-1">
-              <span className="uppercase text-sm font-semibold text-emerald-700">
+              <span className="text-lg font-semibold text-emerald-700">
                 Presupuesto del mes
               </span>
-              <span className="font-semibold text-lg lg:text-xl max-w-[20ch] text-slate-900">
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="font-semibold text-sm lg:text-sm max-w-[20ch] text-slate-900">
                 Aumento del 2.7% desde el último mes.
               </span>
             </div>
-            <div className="font-bold text-emerald-700 flex gap-2 items-end">
+            <div className="font-bold text-greenglows flex gap-2 items-end">
               <span className="text-xl xl:text-2xl">RD$</span>
-              <span className="text-3xl xl:text-4xl">30,000.00</span>
+              <span className="text-3xl xl:text-3xl">30,000.00</span>
               <CaretUpIcon />
             </div>
           </div>
@@ -49,29 +51,29 @@ export default function Dashboard(props: DashboardProps) {
         <DashboardCard>
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col gap-2">
-              <span className="uppercase text-sm font-semibold text-emerald-700">
+              <span className=" text-lg font-semibold text-emerald-700">
                 Saldo disponible
               </span>
             </div>
             <Progress
-              className="w-full text-slate-900 font-normal mb-3"
-              color="warning"
+              className="w-full text-slate-900 font-normal mb-1"
+              color="success"
               label="Porcentaje utilizado"
               maxValue={61200}
               showValueLabel={true}
               value={33000}
               size="sm"
             />
-            <div className="font-bold text-emerald-700 flex items-end gap-2">
+            <div className="font-bold text-greenglows flex items-end gap-2">
               <span className="text-xl xl:text-2xl">RD$</span>
-              <span className="text-3xl xl:text-4xl ">61,200.00</span>
+              <span className="text-3xl xl:text-3xl ">61,200.00</span>
             </div>
           </div>
         </DashboardCard>
-        <DashboardCard className=" text-white" variant="colored">
+        <DashboardCard className="text-white bg-softBrown">
           <div className="flex flex-col h-full justify-between gap-2">
-            <span className="font-light text-sm">Recomendaciones</span>
-            <p className="2xl:text-lg">
+            <span className="font-light text-lg">Recomendaciones</span>
+            <p className="4xl:text-sm">
               &quot;Para gestionar tu presupuesto de manera efectiva, es fundamental que seas
               realista y consciente de tus hábitos financieros.&quot;
             </p>
@@ -79,7 +81,7 @@ export default function Dashboard(props: DashboardProps) {
           </div>
         </DashboardCard>
         <div className="col-span-3 flex gap-4">
-          <DashboardCard className="w-[40%]" variant="lightColored" />
+          <DashboardCard className="w-[40%] bg-mutedGreen" variant="lightColored" />
           <DashboardCard className="w-full">
             <DashboardTable />
           </DashboardCard>
@@ -88,7 +90,7 @@ export default function Dashboard(props: DashboardProps) {
           <DashboardCard className="w-full">
             <DashboardBarChart />
           </DashboardCard>
-          <DashboardCard className="w-[40%]" variant="lightColored" />
+          <DashboardCard className="w-[40%] bg-mutedGreen " variant="lightColored" />
         </div>
       </div>
     </div>

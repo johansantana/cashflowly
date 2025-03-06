@@ -33,11 +33,11 @@ const chartData = [
 const chartConfig = {
   budget: {
     label: 'Presupuesto',
-    color: '#006045'
+    color: '#eec48d'
   },
   spent: {
     label: 'Gastado',
-    color: '#059669'
+    color: '#dc6c6b'
   }
 } satisfies ChartConfig
 
