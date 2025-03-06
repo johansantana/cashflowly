@@ -20,7 +20,7 @@ export default function DashboardTable() {
         color="secondary"
         selectionMode="multiple"
         classNames={{
-          base: 'max-h-[300px] overflow-scroll',
+          base: 'max-h-[400px] overflow-scroll',
           table: 'min-h-[90px]'
         }}
         className="overflow-hidden"

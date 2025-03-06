@@ -70,7 +70,7 @@ export default function Dashboard(props: DashboardProps) {
             </div>
           </div>
         </DashboardCard>
-        <DashboardCard className="text-white bg-softBrown">
+        <DashboardCard className=" text-white bg-mutedGreen" variant="lightColored">
           <div className="flex flex-col h-full justify-between gap-2">
             <span className="font-light text-lg">Recomendaciones</span>
             <p className="4xl:text-sm">
