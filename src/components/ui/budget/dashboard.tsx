@@ -1,19 +1,55 @@
 'use client'
 
-import DashboardCard from '../dashboardCard'
-import CaretUpIcon from '../../icons/caretUp'
-import PlusIcon from '@/components/icons/plus'
-import { Progress, Button } from '@heroui/react'
-import DashboardTable from './dashboardTable'
-import DashboardBarChart from './dashboardBarChart'
-import ReportIcon from '@/components/icons/report'
+import { useEffect, useState } from 'react';
+import DashboardCard from '../dashboardCard';
+import CaretUpIcon from '../../icons/caretUp';
+import PlusIcon from '@/components/icons/plus';
+import { Progress, Button } from '@heroui/react';
+import DashboardTable from './dashboardTable';
+import DashboardBarChart from './dashboardBarChart';
+import ReportIcon from '@/components/icons/report';
 
 interface DashboardProps extends React.HTMLAttributes<HTMLElement> {
   title: string
 }
 
+interface RecomendacionesResponse {
+  recomendaciones: string;
+}
+
 export default function Dashboard(props: DashboardProps) {
-  const { title, ...restOfProps } = props
+  const { title, ...restOfProps } = props;
+  const [recomendacion, setRecomendacion] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchRecomendaciones = async () => {
+      try {
+        const response = await fetch('https://localhost:7248/api/Gasto/recomendaciones', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtLnJhdmVsb0BibHVldHJhY2suY29tLmRvIiwianRpIjoiMTVkMDRjMTktMjE3Ni00ZDg1LTkyMjctNmQ1YzU0MmEzZDUwIiwiaWQiOiI2Iiwibm9tYnJlIjoiTWFyY29zIFJhdmVsbyIsImV4cCI6MTc0Nzg1ODQ4MSwiaXNzIjoiQ2FzaEZsb3dseSIsImF1ZCI6IkNhc2hGbG93bHlVc2VycyJ9.peeAyUWheBDrKoB1Q7yfOBAYxIsRUhnVrhPHLVIsTl0',
+            'Accept': '*/*'
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error en la petición: ${response.status}`);
+        }
+
+        const data: RecomendacionesResponse = await response.json();
+        setRecomendacion(data.recomendaciones);
+      } catch (err: any) {
+        setError(err.message || 'Ocurrió un error al obtener las recomendaciones.');
+        console.error('Error al obtener las recomendaciones:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecomendaciones();
+  }, []);
 
   return (
     <div className="flex h-full flex-col gap-4" {...restOfProps}>
@@ -28,13 +64,12 @@ export default function Dashboard(props: DashboardProps) {
           </Button>
         </div>
       </div>
+
       <div className="grid grid-flow-row flex-grow grid-rows-[.5fr_1fr_1fr] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
         <DashboardCard>
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col gap-1">
-              <span className="text-lg font-semibold text-emerald-700">
-                Presupuesto del mes
-              </span>
+              <span className="text-lg font-semibold text-emerald-700">Presupuesto del mes</span>
             </div>
             <div className="flex flex-col gap-1">
               <span className="font-semibold text-sm lg:text-sm max-w-[20ch] text-slate-900">
@@ -48,12 +83,11 @@ export default function Dashboard(props: DashboardProps) {
             </div>
           </div>
         </DashboardCard>
+
         <DashboardCard>
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col gap-2">
-              <span className=" text-lg font-semibold text-emerald-700">
-                Saldo disponible
-              </span>
+              <span className=" text-lg font-semibold text-emerald-700">Saldo disponible</span>
             </div>
             <Progress
               className="w-full text-slate-900 font-normal mb-1"
@@ -70,22 +104,30 @@ export default function Dashboard(props: DashboardProps) {
             </div>
           </div>
         </DashboardCard>
+
         <DashboardCard className=" text-white bg-mutedGreen" variant="lightColored">
           <div className="flex flex-col h-full justify-between gap-2">
             <span className="font-light text-lg">Recomendaciones</span>
-            <p className="4xl:text-sm">
-              &quot;Para gestionar tu presupuesto de manera efectiva, es fundamental que seas
-              realista y consciente de tus hábitos financieros.&quot;
-            </p>
-            <span className="font-light text-xs">powered by AI</span>
+            {loading ? (
+              <p>Cargando recomendaciones...</p>
+            ) : error ? (
+              <p className="text-red-500">{error}</p>
+            ) : recomendacion ? (
+              <p className="text-sm">{recomendacion}</p>
+            ) : (
+              <p>No se encontraron recomendaciones.</p>
+            )}
+            <span className="font-light text-xs">powered by OpenAI</span>
           </div>
         </DashboardCard>
+
         <div className="col-span-3 flex gap-4">
           <DashboardCard className="w-[40%] bg-mutedGreen" variant="lightColored" />
           <DashboardCard className="w-full">
             <DashboardTable />
           </DashboardCard>
         </div>
+
         <div className="col-span-3 flex gap-4">
           <DashboardCard className="w-full">
             <DashboardBarChart />
@@ -94,5 +136,5 @@ export default function Dashboard(props: DashboardProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

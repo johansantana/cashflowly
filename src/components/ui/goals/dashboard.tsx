@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import DashboardCard from '../dashboardCard'
 import DashboardTable from './dashboardTable'
 import DashboardTableCompleted from './dashboardTableCompleted'
@@ -10,8 +11,44 @@ interface DashboardProps extends React.HTMLAttributes<HTMLElement> {
   title: string
 }
 
+interface RecomendacionesResponse {
+  recomendaciones: string
+}
+
 export default function Dashboard(props: DashboardProps) {
   const { title, ...restOfProps } = props
+  const [recomendacion, setRecomendacion] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchRecomendaciones = async () => {
+      try {
+        const response = await fetch('https://localhost:7248/api/Meta/recomendaciones', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtLnJhdmVsb0BibHVldHJhY2suY29tLmRvIiwianRpIjoiMTVkMDRjMTktMjE3Ni00ZDg1LTkyMjctNmQ1YzU0MmEzZDUwIiwiaWQiOiI2Iiwibm9tYnJlIjoiTWFyY29zIFJhdmVsbyIsImV4cCI6MTc0Nzg1ODQ4MSwiaXNzIjoiQ2FzaEZsb3dseSIsImF1ZCI6IkNhc2hGbG93bHlVc2VycyJ9.peeAyUWheBDrKoB1Q7yfOBAYxIsRUhnVrhPHLVIsTl0',
+            'Accept': '*/*'
+          },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Error en la petición: ${response.status}`);
+      }
+
+      const data: RecomendacionesResponse = await response.json();
+      setRecomendacion(data.recomendaciones);
+    }
+      catch (err: any) {
+        setError(err.message || 'Ocurrió un error al obtener las recomendaciones.');
+        console.error('Error al obtener las recomendaciones:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecomendaciones();
+  }, []);
 
   return (
     <div className="flex h-full flex-col gap-4" {...restOfProps}>
@@ -33,17 +70,16 @@ export default function Dashboard(props: DashboardProps) {
         <DashboardCard className=" text-white bg-slate-500" variant="colored">
           <div className="flex flex-col h-full justify-between gap-2">
             <span className="font-light text-lg">Recomendaciones</span>
-            <p className="2xl:text-2xl">
-              Felicidades por definir tus metas! Un buen plan financiero no solo se trata de
-              ahorrar, sino de hacerlo de manera estrategica. Prioriza tus metas segun urgencia e
-              importancia, establece montos alcanzables y revisa tu progreso regularmente.
-            </p>
-            <p className="">
-              Consejo extra: Divide cada meta en pequeños objetivos mensuales. Así, en lugar de
-              ahorrar para un objetivo más grande, puedes asignar partes pequeñas para cada mes
-              durante 4 o 5 meses. ¡Pequeños pasos hacen gandes logros!
-            </p>
-            <span className="font-light text-xs">powered by AI</span>
+            {loading ? ( 
+              <p>Cargando recomendaciones...</p>
+            ) : error ? (
+              <p className="text-red-500">{error}</p>
+            ) : recomendacion ? (
+              <p className="text-sm">{recomendacion}</p>
+            ) : (
+              <p>No se encontraron recomendaciones</p>
+            )}
+            <span className="font-light text-xs">powered by OpenAI</span>
           </div>
         </DashboardCard>
         <DashboardCard className=" text-white bg-slate-400" variant="colored" />
