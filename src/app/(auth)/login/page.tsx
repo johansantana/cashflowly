@@ -1,11 +1,19 @@
 'use client'
 
-import { Input, Button, Link, Form } from '@heroui/react'
+import { Input, Button, Link, Form, Card, CardBody } from '@heroui/react'
 import LockIcon from '@/components/icons/lock'
 import UserIcon from '@/components/icons/user'
-import { signIn } from '@/auth'
+import { FormEvent, useState } from 'react'
 
 export default function Login() {
+  const [error, setError] = useState('')
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const data = Object.fromEntries(new FormData(e.currentTarget))
+  }
+
   return (
     <main className="h-screen flex flex-col lg:flex-row">
       <section className="h-full lg:w-[40%] grid place-content-center">
@@ -15,16 +23,19 @@ export default function Login() {
             validationBehavior="native"
             className="flex flex-col gap-4 items-center"
             onSubmit={async formData => {
-              'use server'
-              await signIn('credentials', formData)
+              await onSubmit(formData)
             }}
           >
             <Input
+              name="email"
+              isRequired
               type="email"
               placeholder="Correo Electronico"
               startContent={<UserIcon className="w-5 h-5 text-gray-600" />}
             />
             <Input
+              name="password"
+              isRequired
               type="password"
               placeholder="Contraseña"
               className="w-full"
@@ -36,6 +47,11 @@ export default function Login() {
             <Button type="submit" className="bg-teal-800 text-white">
               Iniciar sesión
             </Button>
+            {error && (
+              <Card className="w-full border-red-500 border-1 bg-red-50">
+                <CardBody className="text-sm text-red-500 ">{error}</CardBody>
+              </Card>
+            )}
           </Form>
         </div>
       </section>

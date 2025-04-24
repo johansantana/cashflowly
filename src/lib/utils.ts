@@ -1,13 +1,15 @@
+import { constants } from './constants'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+
 import crypto from 'crypto'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function saltAndHashPassword(password: string) {
-  const salt = crypto.randomBytes(16).toString('hex')
+export function hashPassword(password: string) {
+  const salt = constants.SALT
   const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
-  return { salt, hash }
+  return hash
 }
