@@ -88,24 +88,26 @@ export default function Dashboard(props: DashboardProps) {
             </p>
             <div className="grid grid-cols-2 gap-6 mt-8">
               <div className="flex flex-col gap-2">
-                <span className="text-xl">Fecha de generación:</span>
-                <span className="text-3xl font-medium text-teal-800">31/01/2025</span>
+                <span className="text-lg xl:text-xl">Fecha de generación:</span>
+                <span className="text-xl lg:text-2xl 2xl:text-3xl font-medium text-teal-800">
+                  31/01/2025
+                </span>
               </div>
               <div className="flex flex-col gap-2">
-                <span className="text-xl">Total gastado:</span>
-                <span className="text-3xl font-medium text-teal-800">
+                <span className="text-lg xl:text-xl">Total gastado:</span>
+                <span className="text-xl lg:text-2xl 2xl:text-3xl font-medium text-teal-800">
                   40,000.00 <span className="text-xl">RD$</span>
                 </span>
               </div>
               <div className="flex flex-col gap-2">
-                <span className="text-xl">Ingresos totales:</span>
-                <span className="text-3xl font-medium text-teal-800">
+                <span className="text-lg xl:text-xl">Ingresos totales:</span>
+                <span className="text-xl lg:text-2xl 2xl:text-3xl font-medium text-teal-800">
                   130,000.00 <span className="text-xl">RD$</span>
                 </span>
               </div>
               <div className="flex flex-col gap-2">
-                <span className="text-xl">Total gastado:</span>
-                <span className="text-3xl font-medium text-teal-800">
+                <span className="text-lg xl:text-xl">Total gastado:</span>
+                <span className="text-xl lg:text-2xl 2xl:text-3xl font-medium text-teal-800">
                   20,030.00 <span className="text-xl">RD$</span>
                 </span>
               </div>
