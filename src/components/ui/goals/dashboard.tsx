@@ -67,7 +67,7 @@ export default function Dashboard(props: DashboardProps) {
             <DashboardTable />
           </DashboardCard>
         </div>
-        <DashboardCard className=" text-white bg-slate-500" variant="colored">
+        <DashboardCard className=" text-white bg-mutedGreen" variant="colored">
           <div className="flex flex-col h-full justify-between gap-2">
             <span className="font-light text-lg">Recomendaciones</span>
             {loading ? ( 
@@ -82,7 +82,7 @@ export default function Dashboard(props: DashboardProps) {
             <span className="font-light text-xs">powered by OpenAI</span>
           </div>
         </DashboardCard>
-        <DashboardCard className=" text-white bg-slate-400" variant="colored" />
+        <DashboardCard className=" text-white bg-mutedGreen" variant="colored" />
         <div className="flex gap-4">
           <DashboardCard className="w-full">
             <h1 className="text-xl mb-4 font-medium">Historial de metas cumplidas</h1>
