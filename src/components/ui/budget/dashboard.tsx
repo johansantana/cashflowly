@@ -25,19 +25,21 @@ export default function Dashboard(props: DashboardProps) {
 
   useEffect(() => {
     const fetchRecomendaciones = async () => {
+      const token = localStorage.getItem('token');
+  
       try {
         const response = await fetch('https://localhost:7248/api/Gasto/recomendaciones', {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtLnJhdmVsb0BibHVldHJhY2suY29tLmRvIiwianRpIjoiMTVkMDRjMTktMjE3Ni00ZDg1LTkyMjctNmQ1YzU0MmEzZDUwIiwiaWQiOiI2Iiwibm9tYnJlIjoiTWFyY29zIFJhdmVsbyIsImV4cCI6MTc0Nzg1ODQ4MSwiaXNzIjoiQ2FzaEZsb3dseSIsImF1ZCI6IkNhc2hGbG93bHlVc2VycyJ9.peeAyUWheBDrKoB1Q7yfOBAYxIsRUhnVrhPHLVIsTl0',
+            'Authorization': `Bearer ${token}`,
             'Accept': '*/*'
           },
         });
-
+  
         if (!response.ok) {
           throw new Error(`Error en la petición: ${response.status}`);
         }
-
+  
         const data: RecomendacionesResponse = await response.json();
         setRecomendacion(data.recomendaciones);
       } catch (err: any) {
@@ -47,7 +49,7 @@ export default function Dashboard(props: DashboardProps) {
         setLoading(false);
       }
     };
-
+  
     fetchRecomendaciones();
   }, []);
 
