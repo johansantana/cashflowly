@@ -9,10 +9,41 @@ export default function Login() {
   const [error, setError] = useState('')
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const data = Object.fromEntries(new FormData(e.currentTarget))
-  }
+    e.preventDefault();
+    setError('');
+  
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+  
+    try {
+      const response = await fetch('https://localhost:7248/api/usuarios/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+          recordarSesion: true,
+        }),
+      });
+  
+      if (!response.ok) {
+        const res = await response.json();
+        setError(res.message || 'Error al iniciar sesión');
+        return;
+      }
+  
+      const res = await response.json();
+      localStorage.setItem('token', res.token); // ✅ guardar el token
+      console.log('Inicio de sesión exitoso');
+  
+      // Redirigir al dashboard
+      window.location.href = '/budget';
+    } catch (err) {
+      setError('Error de red o del servidor');
+    }
+  };
+  
 
   return (
     <main className="h-screen flex flex-col lg:flex-row">
@@ -55,8 +86,8 @@ export default function Login() {
           </Form>
         </div>
       </section>
-      <section className="h-full grow bg-gradient-to-br from-teal-900 to-sky-900 grid place-content-center">
-        <div className="h-full text-white flex flex-col gap-4">
+      <section className="h-full grow bg-darkGreen from-teal-900 to-sky-900 grid place-content-center">
+        <div className="h-full text-white flex flex-col gap-8">
           <h2 className="text-4xl font-light">¡Bienvenido de vuelta!</h2>
           <p>Optimiza tus finanzas con la IA</p>
           <p className="max-w-96 font-light">
@@ -64,7 +95,7 @@ export default function Login() {
             haz crecer tu dinero de forma inteligente. Únete ahora y comienza a mejorar tu futuro
             financiero.
           </p>
-          <Button href="/signup" className="self-start text-white" as={Link} variant="bordered">
+          <Button href="/signup" className="self-start text-white bg-mutedGreen" as={Link} variant="bordered">
             Registrarse
           </Button>
         </div>

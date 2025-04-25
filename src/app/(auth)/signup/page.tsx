@@ -12,15 +12,44 @@ export default function Signup() {
   const [error, setError] = useState('')
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const data = Object.fromEntries(new FormData(e.currentTarget))
-  }
+    e.preventDefault();
+  
+    const formData = new FormData(e.currentTarget);
+    const nombre = `${formData.get('firstname')} ${formData.get('lastname')}`;
+    const email = formData.get('email');
+    const password = formData.get('password');
+  
+    try {
+      const response = await fetch('https://localhost:7248/api/usuarios/registrar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*'
+        },
+        body: JSON.stringify({
+          nombre,
+          email,
+          password
+        })
+      });
+  
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data?.message || 'Error al registrar usuario.');
+      }
+  
+      // Redirige o muestra mensaje si todo va bien
+      alert('Usuario registrado correctamente');
+      window.location.href = '/login';
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
 
   return (
     <main className="h-screen flex flex-col lg:flex-row">
-      <section className="h-full grow bg-gradient-to-br from-teal-900 to-sky-900 grid place-content-center">
-        <div className="h-full text-white flex flex-col gap-4">
+      <section className="h-full grow bg-darkGreen from-teal-900 to-sky-900 grid place-content-center">
+        <div className="h-full text-white flex flex-col gap-8">
           <h2 className="text-4xl font-light">¡Hola amigo!</h2>
           <p>Bienvenido de nuevo, Tus finanzas te esperan</p>
           <p className="max-w-96 font-light">
@@ -28,7 +57,7 @@ export default function Signup() {
             ayuda de nuestra inteligencia artificial. Conéctate y sigue avanzando hacia su
             estabilidad económica.
           </p>
-          <Button href="/login" className="self-start text-white" as={Link} variant="bordered">
+          <Button href="/login" className="self-start text-white bg-mutedGreen" as={Link} variant="bordered">
             Iniciar sesion
           </Button>
         </div>
