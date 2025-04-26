@@ -10,12 +10,11 @@ import {
   Button,
   Input,
   Select,
-  SelectItem,
-  Switch
+  SelectItem
 } from '@heroui/react'
 import { useRouter } from 'next/navigation'
 
-interface RegisterIncomeModalProps {
+interface RegisterBillModalProps {
   isOpen: boolean
   onClose: () => void
 }
@@ -36,10 +35,9 @@ const getTokenFromCookies = () => {
   return tokenCookie ? tokenCookie.split('=')[1] : null
 }
 
-export default function RegisterIncomeModal({ isOpen, onClose }: RegisterIncomeModalProps) {
+export default function RegisterBillModal({ isOpen, onClose }: RegisterBillModalProps) {
   const router = useRouter()
   const [amount, setAmount] = useState('')
-  const [isFixed, setIsFixed] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState<string>('')
   const [categories, setCategories] = useState<Category[]>([])
   const [accounts, setAccounts] = useState<Account[]>([])
@@ -55,7 +53,7 @@ export default function RegisterIncomeModal({ isOpen, onClose }: RegisterIncomeM
       }
 
       // Fetch categories
-      fetch('/api/categorias/fijas/ingresos', {
+      fetch('/api/categorias/fijas/gastos', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -91,7 +89,7 @@ export default function RegisterIncomeModal({ isOpen, onClose }: RegisterIncomeM
     }
 
     try {
-      const response = await fetch('/api/Ingresos/registrar', {
+      const response = await fetch('/api/Gasto/registrar', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -100,9 +98,8 @@ export default function RegisterIncomeModal({ isOpen, onClose }: RegisterIncomeM
         body: JSON.stringify({
           monto: parseFloat(amount),
           fecha: new Date().toISOString(),
-          ingresoFijo: isFixed,
-          categoriaId: parseInt(selectedCategory),
-          categoriaPersonalizadaId: 0,
+          categoriaGastoId: parseInt(selectedCategory),
+          categoriaGastoPersonalizadoId: 0,
           cuentaId: parseInt(selectedAccount)
         })
       })
@@ -111,7 +108,7 @@ export default function RegisterIncomeModal({ isOpen, onClose }: RegisterIncomeM
         onClose()
         router.refresh()
       } else {
-        console.error('Error registering income')
+        console.error('Error registering bill')
       }
     } catch (error) {
       console.error('Error:', error)
@@ -124,7 +121,7 @@ export default function RegisterIncomeModal({ isOpen, onClose }: RegisterIncomeM
     <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <ModalContent>
         <form onSubmit={handleSubmit}>
-          <ModalHeader>Registrar Ingreso</ModalHeader>
+          <ModalHeader>Registrar Factura</ModalHeader>
           <ModalBody>
             <div className="flex flex-col gap-4">
               <Input
@@ -159,10 +156,6 @@ export default function RegisterIncomeModal({ isOpen, onClose }: RegisterIncomeM
                   </SelectItem>
                 ))}
               </Select>
-              <div className="flex items-center gap-2">
-                <Switch isSelected={isFixed} onValueChange={setIsFixed} />
-                <span>Ingreso Fijo</span>
-              </div>
             </div>
           </ModalBody>
           <ModalFooter>

@@ -2,7 +2,6 @@
 
 import DashboardCard from '../dashboardCard'
 import CaretUpIcon from '../../icons/caretUp'
-import PlusIcon from '@/components/icons/plus'
 import { Progress, Button } from '@heroui/react'
 import DashboardTable from './dashboardTable'
 import DashboardBarChart from './dashboardBarChart'
@@ -20,9 +19,6 @@ export default function Dashboard(props: DashboardProps) {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-semibold text-slate-900">{title}</h1>
         <div className="flex gap-4">
-          <Button radius="full" className="bg-emerald-700 text-white" startContent={<PlusIcon />}>
-            Registrar Presupuesto
-          </Button>
           <Button radius="full" startContent={<ReportIcon />}>
             Generar Reportes
           </Button>

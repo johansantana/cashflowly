@@ -14,8 +14,11 @@ export default function UserPanel({ isOpen, onClose }: UserPanelProps) {
   if (!isOpen) return null
 
   const handleLogout = () => {
-    // Remove the token cookie
-    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    // Remove the token cookie with the same attributes used during login
+    document.cookie = 'token=; path=/; max-age=0; secure; samesite=strict'
+
+    // Clear localStorage
+    localStorage.removeItem('userId')
 
     // Redirect to login page
     router.push('/login')
@@ -27,7 +30,7 @@ export default function UserPanel({ isOpen, onClose }: UserPanelProps) {
         <div className="flex items-center gap-4">
           <Avatar
             size="lg"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+            src="https://ui-avatars.com/api/?name=User&background=random"
             className="w-16 h-16"
           />
           <div>

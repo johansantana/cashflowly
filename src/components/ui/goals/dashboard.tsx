@@ -5,6 +5,8 @@ import DashboardTable from './dashboardTable'
 import DashboardTableCompleted from './dashboardTableCompleted'
 import { Button } from '@heroui/react'
 import PlusIcon from '@/components/icons/plus'
+import RegisterGoalModal from './registerGoalModal'
+import { useState } from 'react'
 
 interface DashboardProps extends React.HTMLAttributes<HTMLElement> {
   title: string
@@ -12,13 +14,19 @@ interface DashboardProps extends React.HTMLAttributes<HTMLElement> {
 
 export default function Dashboard(props: DashboardProps) {
   const { title, ...restOfProps } = props
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
     <div className="flex h-full flex-col gap-4" {...restOfProps}>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-semibold text-slate-900">{title}</h1>
         <div className="flex gap-4">
-          <Button radius="full" className="bg-slate-600 text-white" startContent={<PlusIcon />}>
+          <Button
+            radius="full"
+            className="bg-slate-600 text-white"
+            startContent={<PlusIcon />}
+            onPress={() => setIsModalOpen(true)}
+          >
             Registrar Meta
           </Button>
         </div>
@@ -54,6 +62,7 @@ export default function Dashboard(props: DashboardProps) {
           </DashboardCard>
         </div>
       </div>
+      <RegisterGoalModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   )
 }

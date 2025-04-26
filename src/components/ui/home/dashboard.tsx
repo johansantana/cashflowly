@@ -25,7 +25,7 @@ export default function Dashboard(props: DashboardProps) {
         <div className="flex items-center gap-4">
           <Avatar
             size="lg"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+            src="https://ui-avatars.com/api/?name=User&background=random"
             className="bg-slate-200"
           />
           <div>
@@ -115,4 +115,4 @@ export default function Dashboard(props: DashboardProps) {
       </div>
     </div>
   )
-} 
+}

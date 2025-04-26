@@ -7,6 +7,8 @@ import { Progress, Button } from '@heroui/react'
 import DashboardTable from './dashboardTable'
 import DashboardBarChart from './dashboardBarChart'
 import ReportIcon from '@/components/icons/report'
+import RegisterBillModal from './registerBillModal'
+import { useState } from 'react'
 
 interface DashboardProps extends React.HTMLAttributes<HTMLElement> {
   title: string
@@ -14,13 +16,19 @@ interface DashboardProps extends React.HTMLAttributes<HTMLElement> {
 
 export default function Dashboard(props: DashboardProps) {
   const { title, ...restOfProps } = props
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
     <div className="flex h-full flex-col gap-4" {...restOfProps}>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-semibold text-slate-900">{title}</h1>
         <div className="flex gap-4">
-          <Button radius="full" className="bg-slate-700 text-white" startContent={<PlusIcon />}>
+          <Button
+            radius="full"
+            className="bg-slate-700 text-white"
+            startContent={<PlusIcon />}
+            onPress={() => setIsModalOpen(true)}
+          >
             Registrar Factura
           </Button>
           <Button radius="full" startContent={<ReportIcon />}>
@@ -72,7 +80,8 @@ export default function Dashboard(props: DashboardProps) {
           <div className="flex flex-col h-full justify-between gap-2">
             <span className="font-light text-sm">Recomendaciones</span>
             <p className="2xl:text-lg">
-              "Para gestionar tus facturas de manera efectiva, es importante mantener un registro detallado y pagar a tiempo para evitar cargos por mora."
+              &quot;Para gestionar tus facturas de manera efectiva, es importante mantener un
+              registro detallado y pagar a tiempo para evitar cargos por mora.&quot;
             </p>
             <span className="font-light text-xs">powered by AI</span>
           </div>
@@ -90,6 +99,7 @@ export default function Dashboard(props: DashboardProps) {
           <DashboardCard className="w-[40%]" variant="lightColored" />
         </div>
       </div>
+      <RegisterBillModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   )
-} 
+}
