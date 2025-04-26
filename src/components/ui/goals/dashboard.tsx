@@ -24,7 +24,7 @@ export default function Dashboard(props: DashboardProps) {
   useEffect(() => {
     const fetchRecomendaciones = async () => {
       const token = localStorage.getItem('token');
-  
+
       try {
         const response = await fetch('https://localhost:7248/api/Meta/recomendaciones', {
           headers: {
@@ -33,11 +33,11 @@ export default function Dashboard(props: DashboardProps) {
             'Accept': '*/*'
           },
         });
-  
+
         if (!response.ok) {
           throw new Error(`Error en la petición: ${response.status}`);
         }
-  
+
         const data: RecomendacionesResponse = await response.json();
         setRecomendacion(data.recomendaciones);
       } catch (err: any) {
@@ -47,7 +47,7 @@ export default function Dashboard(props: DashboardProps) {
         setLoading(false);
       }
     };
-  
+
     fetchRecomendaciones();
   }, []);
 
@@ -70,7 +70,7 @@ export default function Dashboard(props: DashboardProps) {
         </div>
         <DashboardCard className=" text-white bg-mutedGreen" variant="colored">
           <div className="flex flex-col h-full justify-between gap-2">
-            <span className="font-light text-lg">Recomendaciones</span>
+            <span className="font-semibold text-lg">Recomendaciones</span>
             {loading ? ( 
               <p>Cargando recomendaciones...</p>
             ) : error ? (
@@ -82,7 +82,9 @@ export default function Dashboard(props: DashboardProps) {
             )}
             <span className="font-light text-xs">powered by OpenAI</span>
           </div>
-        </DashboardCard>
+        </DashboardCard> 
+
+
         <DashboardCard className=" text-white bg-mutedGreen" variant="colored" />
         <div className="flex gap-4">
           <DashboardCard className="w-full">

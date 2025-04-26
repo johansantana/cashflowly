@@ -38,7 +38,7 @@ export default function Login() {
       console.log('Inicio de sesión exitoso');
   
       // Redirigir al dashboard
-      window.location.href = '/budget';
+      window.location.href = '/';
     } catch (err) {
       setError('Error de red o del servidor');
     }

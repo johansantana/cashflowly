@@ -1,14 +1,73 @@
 'use client'
 
-import React from 'react'
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@heroui/react'
+import React, { useEffect, useState } from 'react'
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Button
+} from '@heroui/react'
 
-export default function DashboardTable() {
+interface Meta {
+  id: number
+  nombre: string
+  objetivo: number
+  fechaPropuesta: string
+  progresoActual: number
+}
+
+export default function DashboardTableCompleted() {
+  const [metasCompletadas, setMetasCompletadas] = useState<Meta[]>([])
+
+  useEffect(() => {
+    const fetchMetas = async () => {
+      const token = localStorage.getItem('token')
+      try {
+        const res = await fetch('https://localhost:7248/api/Meta', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': '*/*'
+          }
+        })
+        const data: Meta[] = await res.json()
+        const completadas = data.filter(meta => meta.progresoActual >= meta.objetivo)
+        setMetasCompletadas(completadas)
+      } catch (err) {
+        console.error('Error al obtener metas completadas:', err)
+      }
+    }
+
+    fetchMetas()
+  }, [])
+
+  const eliminarMeta = async (id: number) => {
+    const token = localStorage.getItem('token')
+    const confirmar = confirm('¿Estás seguro de que deseas eliminar esta meta completada?')
+    if (!confirmar) return
+    try {
+      await fetch(`https://localhost:7248/api/Meta/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': '*/*'
+        }
+      })
+
+      // Remover del estado actual
+      setMetasCompletadas(prev => prev.filter(meta => meta.id !== id))
+    } catch (err) {
+      console.error('Error al eliminar meta completada:', err)
+    }
+  }
+
   return (
     <div className="flex flex-col gap-3">
       <Table
         isHeaderSticky
-        aria-label="Historial de ingresos"
+        aria-label="Historial de metas cumplidas"
         color="secondary"
         classNames={{
           base: 'max-h-[300px] overflow-scroll',
@@ -20,53 +79,25 @@ export default function DashboardTable() {
           <TableColumn>Meta</TableColumn>
           <TableColumn>Monto</TableColumn>
           <TableColumn>Fecha de cumplimiento</TableColumn>
+          <TableColumn>Acciones</TableColumn>
         </TableHeader>
         <TableBody>
-          <TableRow key="1">
-            <TableCell>Fondo de emergencia</TableCell>
-            <TableCell>3,000.00</TableCell>
-            <TableCell>01/12/2025</TableCell>
-          </TableRow>
-          <TableRow key="2">
-            <TableCell>Fondo de emergencia</TableCell>
-            <TableCell>3,000.00</TableCell>
-            <TableCell>01/12/2025</TableCell>
-          </TableRow>
-          <TableRow key="3">
-            <TableCell>Fondo de emergencia</TableCell>
-            <TableCell>3,000.00</TableCell>
-            <TableCell>01/12/2025</TableCell>
-          </TableRow>
-          <TableRow key="4">
-            <TableCell>Fondo de emergencia</TableCell>
-            <TableCell>3,000.00</TableCell>
-            <TableCell>01/12/2025</TableCell>
-          </TableRow>
-          <TableRow key="5">
-            <TableCell>Fondo de emergencia</TableCell>
-            <TableCell>3,000.00</TableCell>
-            <TableCell>01/12/2025</TableCell>
-          </TableRow>
-          <TableRow key="6">
-            <TableCell>Fondo de emergencia</TableCell>
-            <TableCell>3,000.00</TableCell>
-            <TableCell>01/12/2025</TableCell>
-          </TableRow>
-          <TableRow key="7">
-            <TableCell>Fondo de emergencia</TableCell>
-            <TableCell>3,000.00</TableCell>
-            <TableCell>01/12/2025</TableCell>
-          </TableRow>
-          <TableRow key="8">
-            <TableCell>Fondo de emergencia</TableCell>
-            <TableCell>3,000.00</TableCell>
-            <TableCell>01/12/2025</TableCell>
-          </TableRow>
-          <TableRow key="9">
-            <TableCell>Fondo de emergencia</TableCell>
-            <TableCell>3,000.00</TableCell>
-            <TableCell>01/12/2025</TableCell>
-          </TableRow>
+          {metasCompletadas.map(meta => (
+            <TableRow key={meta.id}>
+              <TableCell>{meta.nombre}</TableCell>
+              <TableCell>{meta.objetivo.toLocaleString()}</TableCell>
+              <TableCell>{new Date(meta.fechaPropuesta).toLocaleDateString()}</TableCell>
+              <TableCell>
+                <Button
+                  size="sm"
+                  color="danger"
+                  onClick={() => eliminarMeta(meta.id)}
+                >
+                  Eliminar
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
