@@ -27,7 +27,7 @@ export default function DashboardTable() {
     const fetchMetas = async () => {
       const token = localStorage.getItem('token')
       try {
-        const res = await fetch('https://localhost:7248/api/Meta', {
+        const res = await fetch('https://cashflowly-service-858222718338.us-east1.run.app/api/Meta', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': '*/*'
@@ -50,7 +50,7 @@ export default function DashboardTable() {
     if (!confirmar) return
 
     try {
-      await fetch(`https://localhost:7248/api/Meta/${id}`, {
+      await fetch(`https://cashflowly-service-858222718338.us-east1.run.app/api/Meta/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

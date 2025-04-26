@@ -32,11 +32,15 @@ export default function Dashboard(props: DashboardProps) {
 
   useEffect(() => {
     const fetchRecomendaciones = async () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token'); // Aquí recuperas el JWT
 
+      if (!token) {
+        console.error('No hay token disponible');
+        return;
+      }
       try {
         const response = await fetch(
-          "https://localhost:7248/api/Gasto/recomendaciones",
+          "https://cashflowly-service-858222718338.us-east1.run.app/api/Gasto/recomendaciones",
           {
             headers: {
               "Content-Type": "application/json",
@@ -72,7 +76,7 @@ export default function Dashboard(props: DashboardProps) {
 
       try {
         const perfilRes = await fetch(
-          "https://localhost:7248/api/Cuentas/perfil",
+          "https://cashflowly-service-858222718338.us-east1.run.app/api/Cuentas/perfil",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -90,7 +94,7 @@ export default function Dashboard(props: DashboardProps) {
         });
 
         const cuentasRes = await fetch(
-          `https://localhost:7248/api/Cuentas/GetByUserId/${perfil.id}`,
+          `https://cashflowly-service-858222718338.us-east1.run.app/api/Cuentas/GetByUserId/${perfil.id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

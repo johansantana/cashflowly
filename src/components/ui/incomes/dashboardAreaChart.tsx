@@ -43,7 +43,7 @@ export default function DashboardAreaChart() {
   useEffect(() => {
     const fetchIngresos = async () => {
       const token = localStorage.getItem("token")
-      const response = await fetch('https://localhost:7248/api/Ingresos', {
+      const response = await fetch('https://cashflowly-service-858222718338.us-east1.run.app/api/Ingresos', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,

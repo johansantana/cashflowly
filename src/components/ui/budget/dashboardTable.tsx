@@ -36,7 +36,7 @@ export default function DashboardTable({ onTotalChange }: DashboardTableProps) {
           return
         }
 
-        const response = await fetch('https://localhost:7248/api/Gasto', {
+        const response = await fetch('https://cashflowly-service-858222718338.us-east1.run.app/api/Gasto', {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: '*/*'
