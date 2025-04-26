@@ -6,6 +6,7 @@ import DashboardTable from './dashboardTable'
 import DashboardTableCompleted from './dashboardTableCompleted'
 import { Button } from '@heroui/react'
 import PlusIcon from '@/components/icons/plus'
+import RegisterGoalModal from './registerGoalModal'
 
 interface DashboardProps extends React.HTMLAttributes<HTMLElement> {
   title: string
@@ -20,6 +21,7 @@ export default function Dashboard(props: DashboardProps) {
   const [recomendacion, setRecomendacion] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     const fetchRecomendaciones = async () => {
@@ -98,6 +100,7 @@ export default function Dashboard(props: DashboardProps) {
           </DashboardCard>
         </div>
       </div>
+      <RegisterGoalModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   )
 }

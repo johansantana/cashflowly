@@ -27,20 +27,13 @@ export default function RegisterGoalModal({ isOpen, onClose }: RegisterGoalModal
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-
-    const token = await getToken()
-    if (!token) {
-      console.error('No token found in cookies')
-      setIsLoading(false)
-      return
-    }
-
+    const token = localStorage.getItem('token')
     try {
-      const response = await fetch('/api/Meta/crear', {
+      const response = await fetch('https://localhost:7248/api/Meta/crear', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           nombre: name,
