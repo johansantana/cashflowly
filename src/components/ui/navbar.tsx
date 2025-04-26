@@ -12,13 +12,13 @@ import AnalyticsIcon from '../icons/analytics'
 import ReportIcon from '../icons/report'
 
 const pages = [
-  { label: 'Inicio', href: '/', icon: HomeIcon },
+  //{ label: 'Inicio', href: '/', icon: HomeIcon },
   { label: 'Ingresos', href: '/incomes', icon: TrendingUpIcon },
   { label: 'Facturas', href: '/bills', icon: TrendingDownIcon },
   { label: 'Gastos & Presupuestos', href: '/budget', icon: BudgetIcon },
   { label: 'Metas', href: '/goals', icon: TargetIcon },
   { label: 'Reportes', href: '/reports', icon: ReportIcon },
-  { label: 'Análisis', href: '/analysis', icon: AnalyticsIcon }
+  //{ label: 'Análisis', href: '/analysis', icon: AnalyticsIcon }
 ]
 
 export default function Navbar(props: React.HTMLProps<HTMLElement>) {

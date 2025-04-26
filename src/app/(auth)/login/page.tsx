@@ -15,7 +15,7 @@ export default function Login() {
     const data = Object.fromEntries(new FormData(e.currentTarget));
   
     try {
-      const response = await fetch('https://cashflowly-service-858222718338.us-east1.run.app/api/usuarios/login', {
+      const response = await fetch('https://localhost:7248/api/usuarios/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export default function Login() {
       localStorage.setItem('token', cleanToken);
       console.log('Inicio de sesión exitoso');
   
-      window.location.href = '/'; // Redirigir al dashboard
+      window.location.href = '/incomes'; // Redirigir al dashboard
     } catch (err) {
       setError('Error de red o del servidor');
     }

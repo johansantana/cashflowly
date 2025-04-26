@@ -26,7 +26,7 @@ export default function Dashboard(props: DashboardProps) {
       const token = localStorage.getItem('token');
 
       try {
-        const response = await fetch('https://cashflowly-service-858222718338.us-east1.run.app/api/Meta/recomendaciones', {
+        const response = await fetch('https://localhost:7248/api/Meta/recomendaciones', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,

@@ -20,7 +20,7 @@ export default function Signup() {
     const password = formData.get('password');
   
     try {
-      const response = await fetch('https://cashflowly-service-858222718338.us-east1.run.app/api/usuarios/registrar', {
+      const response = await fetch('https://localhost:7248/api/usuarios/registrar', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

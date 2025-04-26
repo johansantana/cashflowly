@@ -26,7 +26,7 @@ export default function DashboardTableCompleted() {
     const fetchMetas = async () => {
       const token = localStorage.getItem('token')
       try {
-        const res = await fetch('https://cashflowly-service-858222718338.us-east1.run.app/api/Meta', {
+        const res = await fetch('https://localhost:7248/api/Meta', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': '*/*'
@@ -48,7 +48,7 @@ export default function DashboardTableCompleted() {
     const confirmar = confirm('¿Estás seguro de que deseas eliminar esta meta completada?')
     if (!confirmar) return
     try {
-      await fetch(`https://cashflowly-service-858222718338.us-east1.run.app/api/Meta/${id}`, {
+      await fetch(`https://localhost:7248/api/Meta/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -40,7 +40,7 @@ export default function Dashboard(props: DashboardProps) {
       }
       try {
         const response = await fetch(
-          "https://cashflowly-service-858222718338.us-east1.run.app/api/Gasto/recomendaciones",
+          "https://localhost:7248/api/Gasto/recomendaciones",
           {
             headers: {
               "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export default function Dashboard(props: DashboardProps) {
 
       try {
         const perfilRes = await fetch(
-          "https://cashflowly-service-858222718338.us-east1.run.app/api/Cuentas/perfil",
+          "https://localhost:7248/api/Cuentas/perfil",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -94,7 +94,7 @@ export default function Dashboard(props: DashboardProps) {
         });
 
         const cuentasRes = await fetch(
-          `https://cashflowly-service-858222718338.us-east1.run.app/api/Cuentas/GetByUserId/${perfil.id}`,
+          `https://localhost:7248/api/Cuentas/GetByUserId/${perfil.id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
