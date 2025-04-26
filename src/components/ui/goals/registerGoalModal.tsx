@@ -11,7 +11,6 @@ import {
   Input
 } from '@heroui/react'
 import { useRouter } from 'next/navigation'
-import { getToken } from '@/lib/auth'
 
 interface RegisterGoalModalProps {
   isOpen: boolean
