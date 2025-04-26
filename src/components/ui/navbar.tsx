@@ -15,7 +15,7 @@ const pages = [
   { label: 'Inicio', href: '/', icon: HomeIcon },
   { label: 'Ingresos', href: '/incomes', icon: TrendingUpIcon },
   { label: 'Facturas', href: '/bills', icon: TrendingDownIcon },
-  { label: 'Presupuesto', href: '/budget', icon: BudgetIcon },
+  { label: 'Gastos & Presupuestos', href: '/budget', icon: BudgetIcon },
   { label: 'Metas', href: '/goals', icon: TargetIcon },
   { label: 'Reportes', href: '/reports', icon: ReportIcon },
   { label: 'Análisis', href: '/analysis', icon: AnalyticsIcon }
