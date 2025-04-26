@@ -2,11 +2,8 @@
 
 import DashboardCard from '../dashboardCard'
 import CaretUpIcon from '../../icons/caretUp'
-import CaretDownIcon from '../../icons/caretDown'
-import { Progress, Button, Avatar } from '@heroui/react'
-import DashboardTable from './dashboardTable'
+import { Progress, Avatar } from '@heroui/react'
 import DashboardAreaChart from './dashboardAreaChart'
-import PlusIcon from '@/components/icons/plus'
 import TargetIcon from '@/components/icons/target'
 import TrendingUpIcon from '@/components/icons/trendingUp'
 import TrendingDownIcon from '@/components/icons/trending'
@@ -16,7 +13,7 @@ interface DashboardProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 export default function Dashboard(props: DashboardProps) {
-  const { title, ...restOfProps } = props
+  const { ...restOfProps } = props
 
   return (
     <div className="flex h-full flex-col gap-6" {...restOfProps}>
