@@ -10,8 +10,41 @@ export default function Login() {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setError('')
 
     const data = Object.fromEntries(new FormData(e.currentTarget))
+
+    try {
+      const response = await fetch('/api/proxy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Error al iniciar sesión')
+      }
+
+      const responseText = await response.text()
+      const [token, id] = responseText.split(';')
+
+      // Set the token in a cookie
+      document.cookie = `token=${token}; path=/; max-age=2592000` // 30 days
+
+      // Store the ID in localStorage
+      localStorage.setItem('userId', id)
+
+      // Redirect to dashboard on success
+      window.location.href = '/'
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error al iniciar sesión')
+    }
   }
 
   return (

@@ -1,6 +1,6 @@
 import Dashboard from '@/components/ui/reports/dashboard'
 
-export default function Budget() {
+export default function Reports() {
   return (
     <div className="h-full">
       <Dashboard title="Reportes Generados" />
