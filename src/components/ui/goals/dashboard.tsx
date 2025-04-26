@@ -56,7 +56,12 @@ export default function Dashboard(props: DashboardProps) {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-semibold text-slate-900">{title}</h1>
         <div className="flex gap-4">
-          <Button radius="full" className="bg-slate-600 text-white" startContent={<PlusIcon />}>
+        <Button
+            radius="full"
+            className="bg-slate-600 text-white"
+            startContent={<PlusIcon />}
+            onPress={() => setIsModalOpen(true)}
+          >
             Registrar Meta
           </Button>
         </div>
