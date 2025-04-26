@@ -48,7 +48,7 @@ const chartConfig = {
   }
 } satisfies ChartConfig
 
-export default function dashboardPieChart() {
+export default function DashboardPieChart() {
   return (
     <Card className="flex flex-col shadow-none bg-transparent border-none">
       <CardHeader className="items-center pb-0">

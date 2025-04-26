@@ -6,6 +6,8 @@ import DashboardTable from './dashboardTable'
 import DashboardTableCompleted from './dashboardTableCompleted'
 import { Button } from '@heroui/react'
 import PlusIcon from '@/components/icons/plus'
+import RegisterGoalModal from './registerGoalModal'
+import { useState } from 'react'
 
 interface DashboardProps extends React.HTMLAttributes<HTMLElement> {
   title: string
@@ -17,46 +19,19 @@ interface RecomendacionesResponse {
 
 export default function Dashboard(props: DashboardProps) {
   const { title, ...restOfProps } = props
-  const [recomendacion, setRecomendacion] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchRecomendaciones = async () => {
-      const token = localStorage.getItem('token');
-
-      try {
-        const response = await fetch('https://cashflowly-service-858222718338.us-east1.run.app/api/Meta/recomendaciones', {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-            'Accept': '*/*'
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Error en la petición: ${response.status}`);
-        }
-
-        const data: RecomendacionesResponse = await response.json();
-        setRecomendacion(data.recomendaciones);
-      } catch (err: any) {
-        setError(err.message || 'Ocurrió un error al obtener las recomendaciones.');
-        console.error('Error al obtener las recomendaciones:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecomendaciones();
-  }, []);
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
     <div className="flex h-full flex-col gap-4" {...restOfProps}>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-semibold text-slate-900">{title}</h1>
         <div className="flex gap-4">
-          <Button radius="full" className="bg-slate-600 text-white" startContent={<PlusIcon />}>
+          <Button
+            radius="full"
+            className="bg-slate-600 text-white"
+            startContent={<PlusIcon />}
+            onPress={() => setIsModalOpen(true)}
+          >
             Registrar Meta
           </Button>
         </div>
@@ -93,6 +68,7 @@ export default function Dashboard(props: DashboardProps) {
           </DashboardCard>
         </div>
       </div>
+      <RegisterGoalModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   )
 }

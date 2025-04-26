@@ -75,7 +75,6 @@ export default function DashboardTable() {
       <Table
         aria-label="Historial de ingresos"
         color="default"
-        defaultSelectedKeys={['2', '3']}
         selectionMode="multiple"
       >
         <TableHeader>

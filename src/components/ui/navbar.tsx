@@ -8,7 +8,6 @@ import TrendingDownIcon from '../icons/trending'
 import BudgetIcon from '../icons/budget'
 import TargetIcon from '../icons/target'
 import SettingsIcon from '../icons/settings'
-import AnalyticsIcon from '../icons/analytics'
 import ReportIcon from '../icons/report'
 
 const pages = [
@@ -17,8 +16,7 @@ const pages = [
   { label: 'Facturas', href: '/bills', icon: TrendingDownIcon },
   { label: 'Gastos & Presupuestos', href: '/budget', icon: BudgetIcon },
   { label: 'Metas', href: '/goals', icon: TargetIcon },
-  { label: 'Reportes', href: '/reports', icon: ReportIcon },
-  { label: 'Análisis', href: '/analysis', icon: AnalyticsIcon }
+  { label: 'Reportes', href: '/reports', icon: ReportIcon }
 ]
 
 export default function Navbar(props: React.HTMLProps<HTMLElement>) {

@@ -1,7 +1,9 @@
+import Dashboard from '@/components/ui/home/dashboard'
+
 export default function Home() {
   return (
-    <div>
-      <h1>Inicio</h1>
+    <div className="h-full">
+      <Dashboard title="Inicio" />
     </div>
   )
 }

@@ -9,41 +9,43 @@ export default function Login() {
   const [error, setError] = useState('')
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError('');
-  
-    const data = Object.fromEntries(new FormData(e.currentTarget));
-  
+    e.preventDefault()
+    setError('')
+
+    const data = Object.fromEntries(new FormData(e.currentTarget))
+
     try {
-      const response = await fetch('https://cashflowly-service-858222718338.us-east1.run.app/api/usuarios/login', {
+      const response = await fetch('/api/proxy', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           email: data.email,
-          password: data.password,
-          recordarSesion: true,
-        }),
-      });
-  
+          password: data.password
+        })
+      })
+
       if (!response.ok) {
-        const res = await response.json();
-        setError(res.message || 'Error al iniciar sesión');
-        return;
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Error al iniciar sesión')
       }
-  
-      const res = await response.json();
-      const cleanToken = res.token.split(';')[0]; //Limpiar el token
-      localStorage.setItem('token', cleanToken);
-      console.log('Inicio de sesión exitoso');
-  
-      window.location.href = '/'; // Redirigir al dashboard
+
+      const responseText = await response.text()
+      const [token, id] = responseText.split(';')
+
+      // Set the token in a cookie
+      document.cookie = `token=${token}; path=/; max-age=2592000` // 30 days
+
+      // Store the ID in localStorage
+      localStorage.setItem('userId', id)
+
+      // Redirect to dashboard on success
+      window.location.href = '/'
     } catch (err) {
-      setError('Error de red o del servidor');
+      setError(err instanceof Error ? err.message : 'Error al iniciar sesión')
     }
-  };
-  
+  }
   return (
     <main className="h-screen flex flex-col lg:flex-row">
       <section className="h-full lg:w-[40%] grid place-content-center">
