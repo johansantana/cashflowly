@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Table,
   TableHeader,
@@ -11,81 +11,83 @@ import {
   Chip
 } from '@heroui/react'
 
-export default function DashboardTable() {
+interface Gasto {
+  id: number
+  monto: number
+  categoria: string | null
+  categoriaPersonalizada: string | null
+  cuenta: string
+}
+
+interface DashboardTableProps {
+  onTotalChange?: (total: number) => void;
+}
+
+export default function DashboardTable({ onTotalChange }: DashboardTableProps) {
+  const [gastos, setGastos] = useState<Gasto[]>([])
+  const [totalGastado, setTotalGastado] = useState<number>(0)
+
+  useEffect(() => {
+    const fetchGastos = async () => {
+      try {
+        const token = localStorage.getItem('token')
+        if (!token) {
+          console.error('Token no encontrado')
+          return
+        }
+
+        const response = await fetch('https://cashflowly-service-858222718338.us-east1.run.app/api/Gasto', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: '*/*'
+          }
+        })
+
+        const data: Gasto[] = await response.json()
+
+        const gastosFiltrados = data.filter(
+          g => g.categoria !== null || g.categoriaPersonalizada !== null
+        )
+
+        setGastos(gastosFiltrados)
+
+        // Calcular el total gastado
+        const total = gastosFiltrados.reduce((acc, gasto) => acc + gasto.monto, 0)
+        setTotalGastado(total)
+
+        // Informar el total al padre si existe la prop
+        if (onTotalChange) {
+          onTotalChange(total)
+        }
+      } catch (error) {
+        console.error('Error al cargar los gastos:', error)
+      }
+    }
+
+    fetchGastos()
+  }, [onTotalChange])
+
   return (
-    <div className="flex flex-col gap-3">
-      <Table aria-label="Historial de ingresos" color="success" selectionMode="multiple">
-        <TableHeader>
-          <TableColumn>Categoría</TableColumn>
-          <TableColumn>Presupuesto (RD$)</TableColumn>
-          <TableColumn>Gastado (RD$)</TableColumn>
-          <TableColumn>Límite</TableColumn>
-          <TableColumn>Prioridad</TableColumn>
-          <TableColumn>Método de pago</TableColumn>
-        </TableHeader>
-        <TableBody>
-          <TableRow key="1">
+    <Table aria-label="Historial de gastos" color="success" selectionMode="multiple">
+      <TableHeader>
+        <TableColumn>Categoría</TableColumn>
+        <TableColumn>Monto (RD$)</TableColumn>
+        <TableColumn>Cuenta</TableColumn>
+      </TableHeader>
+
+      <TableBody className="max-h-[350px] overflow-y-auto block">
+        {gastos.map(gasto => (
+          <TableRow key={gasto.id}>
             <TableCell>
-              <Chip className="bg-gray-200">Alimentación</Chip>
+              <Chip className="bg-lightBrown">
+                {gasto.categoria ?? gasto.categoriaPersonalizada}
+              </Chip>
             </TableCell>
-            <TableCell>5,000.00</TableCell>
-            <TableCell>2,000.00</TableCell>
-            <TableCell>40%</TableCell>
-            <TableCell>
-              <Chip className="bg-rose-300">Alta</Chip>
-            </TableCell>
-            <TableCell>Tarjeta</TableCell>
+            <TableCell>{gasto.monto.toFixed(2)}</TableCell>
+            <TableCell>{gasto.cuenta}</TableCell>
           </TableRow>
-          <TableRow key="2">
-            <TableCell>
-              <Chip className="bg-green-200">Transporte</Chip>
-            </TableCell>
-            <TableCell>3,500.00</TableCell>
-            <TableCell>1,500.00</TableCell>
-            <TableCell>50%</TableCell>
-            <TableCell>
-              <Chip className="bg-green-200">Media</Chip>
-            </TableCell>
-            <TableCell>Efectivo</TableCell>
-          </TableRow>
-          <TableRow key="3">
-            <TableCell>
-              <Chip className="bg-blue-200">Vivienda</Chip>
-            </TableCell>
-            <TableCell>10,000.00</TableCell>
-            <TableCell>10,000.00</TableCell>
-            <TableCell>100%</TableCell>
-            <TableCell>
-              <Chip className="bg-rose-300">Alta</Chip>
-            </TableCell>
-            <TableCell>Efectivo</TableCell>
-          </TableRow>
-          <TableRow key="4">
-            <TableCell>
-              <Chip className="bg-amber-200">Servicios basicos</Chip>
-            </TableCell>
-            <TableCell>6,000.00</TableCell>
-            <TableCell>5,000.00</TableCell>
-            <TableCell>80%</TableCell>
-            <TableCell>
-              <Chip className="bg-green-200">Media</Chip>
-            </TableCell>
-            <TableCell>Efectivo</TableCell>
-          </TableRow>
-          <TableRow key="5">
-            <TableCell>
-              <Chip className="bg-pink-200">Salud y bienestar</Chip>
-            </TableCell>
-            <TableCell>4,000.00</TableCell>
-            <TableCell>3,000.00</TableCell>
-            <TableCell>55%</TableCell>
-            <TableCell>
-              <Chip className="bg-green-200">Media</Chip>
-            </TableCell>
-            <TableCell>Transferencia</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </div>
+        ))}
+      </TableBody>
+    </Table>
   )
 }

@@ -85,8 +85,8 @@ export default function Signup() {
 
   return (
     <main className="h-screen flex flex-col lg:flex-row">
-      <section className="h-full grow bg-gradient-to-br from-teal-900 to-sky-900 grid place-content-center">
-        <div className="h-full text-white flex flex-col gap-4">
+      <section className="h-full grow bg-darkGreen from-teal-900 to-sky-900 grid place-content-center">
+        <div className="h-full text-white flex flex-col gap-8">
           <h2 className="text-4xl font-light">¡Hola amigo!</h2>
           <p>Bienvenido de nuevo, Tus finanzas te esperan</p>
           <p className="max-w-96 font-light">
@@ -94,7 +94,7 @@ export default function Signup() {
             ayuda de nuestra inteligencia artificial. Conéctate y sigue avanzando hacia su
             estabilidad económica.
           </p>
-          <Button href="/login" className="self-start text-white" as={Link} variant="bordered">
+          <Button href="/login" className="self-start text-white bg-mutedGreen" as={Link} variant="bordered">
             Iniciar sesion
           </Button>
         </div>

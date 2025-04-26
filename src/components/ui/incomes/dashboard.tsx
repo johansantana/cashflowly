@@ -1,5 +1,8 @@
 'use client'
 
+import { useEffect, useState } from 'react';
+
+
 import DashboardCard from '../dashboardCard'
 import CaretUpIcon from '../../icons/caretUp'
 import ReportIcon from '@/components/icons/report'
@@ -13,6 +16,17 @@ import { useState } from 'react'
 
 interface DashboardProps extends React.HTMLAttributes<HTMLElement> {
   title: string
+}
+
+interface Ingreso {
+  id: number;
+  monto: number;
+  fecha: string;
+  ingresoFijo: boolean;
+  categoria: string | null;
+  cuenta: string;
+  usuario: string | null;
+  categoriaPersonalizada: string | null;
 }
 
 export default function Dashboard(props: DashboardProps) {
@@ -41,14 +55,18 @@ export default function Dashboard(props: DashboardProps) {
         <DashboardCard>
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col gap-1">
-              <span className="uppercase text-sm font-semibold text-sky-700">Ingreso del mes</span>
-              <span className="font-semibold text-lg lg:text-xl max-w-[20ch] text-slate-900">
-                Aumento del 2.7% desde el último mes.
+              <span className="text-lg font-semibold text-darkGreen2">Ingreso del mes</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="font-semibold text-lg lg:text-sm max-w-[20ch] text-slate-900">
+                Aumento del {crecimientoPorcentaje.toFixed(2)}% desde el último mes.
               </span>
             </div>
-            <div className="font-bold text-sky-700 flex gap-2 items-end">
+            <div className="font-bold text-greenglows flex gap-2 items-end">
               <span className="text-xl xl:text-2xl">RD$</span>
-              <span className="text-3xl xl:text-4xl">50,000.00</span>
+              <span className="text-3xl xl:text-2xl">{totalMes.toLocaleString("es-DO", {
+                  minimumFractionDigits: 2,
+                })}</span>
               <CaretUpIcon />
             </div>
           </div>
@@ -56,33 +74,37 @@ export default function Dashboard(props: DashboardProps) {
         <DashboardCard>
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col gap-2">
-              <span className="uppercase text-sm font-semibold text-sky-700">
-                Balance total del mes
-              </span>
+              <span className="text-lg font-semibold text-darkGreen2">Balance total del mes</span>
             </div>
-            <div className="font-bold text-sky-700 flex gap-2 items-end">
-              <span className="text-xl xl:text-3xl">RD$</span>
-              <span className="text-3xl xl:text-5xl">50,000.00</span>
+            <div className="font-bold text-sky-700 flex gap-2 items-end max-w-[20ch] text-slate-900">
+              <span className="text-xl xl:text-2xl">RD$</span>
+              <span className="text-3xl xl:text-2xl">{totalMes.toLocaleString("es-DO", {
+                  minimumFractionDigits: 2,
+                })}</span>
             </div>
           </div>
         </DashboardCard>
         <DashboardCard>
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col gap-2">
-              <span className="uppercase text-sm font-semibold text-sky-700">
+              <span className="text-lg font-semibold text-darkGreen2">
                 Ingreso más alto de los últimos meses
               </span>
-              <span className="uppercase text-sm font-semibold">Diciembre 2024</span>
             </div>
-            <div className="font-bold text-sky-700 flex gap-2 items-end">
-              <span className="text-xl xl:text-3xl">RD$</span>
-              <span className="text-3xl xl:text-5xl">90,000.00</span>
+            <div className="flex flex-col gap-2">
+              <span className="uppercase text-sm font-semibold">Ingreso más alto</span>
+            </div>
+            <div className="font-bold text-greenglows flex gap-2 items-end">
+              <span className="text-xl xl:text-2xl">RD$</span>
+              <span className="text-3xl xl:text-2xl">{ingresoMasAlto.toLocaleString("es-DO", {
+                  minimumFractionDigits: 2,
+                })}</span>
               <ArrowUpRightIcon className="self-start" />
             </div>
           </div>
         </DashboardCard>
         <div className="col-span-3 flex gap-4">
-          <DashboardCard className="w-[60%] bg-sky-300" variant="lightColored" />
+          <DashboardCard className="w-[60%] bg-mutedGreen" variant="lightColored" />
           <DashboardCard className="w-full">
             <DashboardTable />
           </DashboardCard>
@@ -91,10 +113,10 @@ export default function Dashboard(props: DashboardProps) {
           <DashboardCard className="w-full">
             <DashboardAreaChart />
           </DashboardCard>
-          <DashboardCard className="w-[40%] bg-sky-300" variant="lightColored" />
+          <DashboardCard className="w-[40%] bg-mutedGreen" variant="lightColored" />
         </div>
       </div>
       <RegisterIncomeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
-  )
+  );
 }

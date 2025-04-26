@@ -46,7 +46,6 @@ export default function Login() {
       setError(err instanceof Error ? err.message : 'Error al iniciar sesión')
     }
   }
-
   return (
     <main className="h-screen flex flex-col lg:flex-row">
       <section className="h-full lg:w-[40%] grid place-content-center">
@@ -55,15 +54,13 @@ export default function Login() {
           <Form
             validationBehavior="native"
             className="flex flex-col gap-4 items-center"
-            onSubmit={async formData => {
-              await onSubmit(formData)
-            }}
+            onSubmit={onSubmit}
           >
             <Input
               name="email"
               isRequired
               type="email"
-              placeholder="Correo Electronico"
+              placeholder="Correo Electrónico"
               startContent={<UserIcon className="w-5 h-5 text-gray-600" />}
             />
             <Input
@@ -82,22 +79,23 @@ export default function Login() {
             </Button>
             {error && (
               <Card className="w-full border-red-500 border-1 bg-red-50">
-                <CardBody className="text-sm text-red-500 ">{error}</CardBody>
+                <CardBody className="text-sm text-red-500">{error}</CardBody>
               </Card>
             )}
           </Form>
         </div>
       </section>
-      <section className="h-full grow bg-gradient-to-br from-teal-900 to-sky-900 grid place-content-center">
-        <div className="h-full text-white flex flex-col gap-4">
+
+      <section className="h-full grow bg-darkGreen from-teal-900 to-sky-900 grid place-content-center">
+        <div className="h-full text-white flex flex-col gap-8">
           <h2 className="text-4xl font-light">¡Bienvenido de vuelta!</h2>
           <p>Optimiza tus finanzas con la IA</p>
           <p className="max-w-96 font-light">
-            Toma el control de tus ingresos y gastos inteligencia artificial. Planifica, ahorra y
+            Toma el control de tus ingresos y gastos con inteligencia artificial. Planifica, ahorra y
             haz crecer tu dinero de forma inteligente. Únete ahora y comienza a mejorar tu futuro
             financiero.
           </p>
-          <Button href="/signup" className="self-start text-white" as={Link} variant="bordered">
+          <Button href="/signup" className="self-start text-white bg-mutedGreen" as={Link} variant="bordered">
             Registrarse
           </Button>
         </div>

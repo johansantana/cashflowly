@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import DashboardCard from '../dashboardCard'
 import DashboardTable from './dashboardTable'
 import DashboardTableCompleted from './dashboardTableCompleted'
@@ -10,6 +11,10 @@ import { useState } from 'react'
 
 interface DashboardProps extends React.HTMLAttributes<HTMLElement> {
   title: string
+}
+
+interface RecomendacionesResponse {
+  recomendaciones: string
 }
 
 export default function Dashboard(props: DashboardProps) {
@@ -38,23 +43,24 @@ export default function Dashboard(props: DashboardProps) {
             <DashboardTable />
           </DashboardCard>
         </div>
-        <DashboardCard className=" text-white bg-slate-500" variant="colored">
+        <DashboardCard className=" text-white bg-mutedGreen" variant="colored">
           <div className="flex flex-col h-full justify-between gap-2">
-            <span className="font-light text-lg">Recomendaciones</span>
-            <p className="2xl:text-2xl">
-              Felicidades por definir tus metas! Un buen plan financiero no solo se trata de
-              ahorrar, sino de hacerlo de manera estrategica. Prioriza tus metas segun urgencia e
-              importancia, establece montos alcanzables y revisa tu progreso regularmente.
-            </p>
-            <p className="">
-              Consejo extra: Divide cada meta en pequeños objetivos mensuales. Así, en lugar de
-              ahorrar para un objetivo más grande, puedes asignar partes pequeñas para cada mes
-              durante 4 o 5 meses. ¡Pequeños pasos hacen gandes logros!
-            </p>
-            <span className="font-light text-xs">powered by AI</span>
+            <span className="font-semibold text-lg">Recomendaciones</span>
+            {loading ? ( 
+              <p>Cargando recomendaciones...</p>
+            ) : error ? (
+              <p className="text-red-500">{error}</p>
+            ) : recomendacion ? (
+              <p className="text-sm">{recomendacion}</p>
+            ) : (
+              <p>No se encontraron recomendaciones</p>
+            )}
+            <span className="font-light text-xs">powered by OpenAI</span>
           </div>
-        </DashboardCard>
-        <DashboardCard className=" text-white bg-slate-400" variant="colored" />
+        </DashboardCard> 
+
+
+        <DashboardCard className=" text-white bg-mutedGreen" variant="colored" />
         <div className="flex gap-4">
           <DashboardCard className="w-full">
             <h1 className="text-xl mb-4 font-medium">Historial de metas cumplidas</h1>

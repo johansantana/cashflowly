@@ -14,7 +14,7 @@ const pages = [
   { label: 'Inicio', href: '/', icon: HomeIcon },
   { label: 'Ingresos', href: '/incomes', icon: TrendingUpIcon },
   { label: 'Facturas', href: '/bills', icon: TrendingDownIcon },
-  { label: 'Presupuesto', href: '/budget', icon: BudgetIcon },
+  { label: 'Gastos & Presupuestos', href: '/budget', icon: BudgetIcon },
   { label: 'Metas', href: '/goals', icon: TargetIcon },
   { label: 'Reportes', href: '/reports', icon: ReportIcon }
 ]
@@ -22,13 +22,13 @@ const pages = [
 export default function Navbar(props: React.HTMLProps<HTMLElement>) {
   return (
     <aside
-      className="flex flex-col bg-gradient-to-b to-sky-950 from-teal-950 text-white min-w-[250px] p-5"
+      className="flex flex-col bg-darkGreen text-beige min-w-[400px] p-5"
       {...props}
     >
       <section>
         <div className="flex items-center gap-1">
           <LogoIcon />
-          <span className="text-lg">CashFlowly</span>
+          <span className="text-lg text-white">CashFlowly</span>
         </div>
       </section>
       <Divider className="my-5 bg-white/30" />

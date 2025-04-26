@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Table,
   TableHeader,
@@ -8,85 +8,104 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Chip
+  Chip,
+  Button
 } from '@heroui/react'
 
+interface Meta {
+  id: number
+  nombre: string
+  objetivo: number
+  fechaPropuesta: string
+  progresoActual: number
+}
+
 export default function DashboardTable() {
+  const [metas, setMetas] = useState<Meta[]>([])
+
+  useEffect(() => {
+    const fetchMetas = async () => {
+      const token = localStorage.getItem('token')
+      try {
+        const res = await fetch('https://cashflowly-service-858222718338.us-east1.run.app/api/Meta', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': '*/*'
+          }
+        })
+        const data: Meta[] = await res.json()
+        const activas = data.filter(meta => meta.progresoActual < meta.objetivo)
+        setMetas(activas)
+      } catch (err) {
+        console.error('Error al obtener metas activas:', err)
+      }
+    }
+
+    fetchMetas()
+  }, [])
+
+  const eliminarMeta = async (id: number) => {
+    const token = localStorage.getItem('token')
+    const confirmar = confirm('¿Estás seguro de que deseas eliminar esta meta completada?')
+    if (!confirmar) return
+
+    try {
+      await fetch(`https://cashflowly-service-858222718338.us-east1.run.app/api/Meta/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': '*/*'
+        }
+      })
+
+      // Eliminar del estado actual
+      setMetas(prev => prev.filter(meta => meta.id !== id))
+    } catch (err) {
+      console.error('Error al eliminar meta:', err)
+    }
+  }
+
   return (
     <div className="flex flex-col gap-3">
       <Table
         isHeaderSticky
-        aria-label="Historial de ingresos"
+        aria-label="Metas activas"
         color="secondary"
-        selectionMode="multiple"
         classNames={{
-          base: 'max-h-[300px] overflow-scroll',
+          base: 'max-h-[400px] overflow-scroll',
           table: 'min-h-[90px]'
         }}
         className="overflow-hidden"
       >
         <TableHeader>
-          <TableColumn>Descripcion</TableColumn>
+          <TableColumn>Descripción</TableColumn>
           <TableColumn>Objetivo (RD$)</TableColumn>
           <TableColumn>Acumulado (RD$)</TableColumn>
           <TableColumn>Fecha Límite</TableColumn>
           <TableColumn>Estado</TableColumn>
+          <TableColumn>Acciones</TableColumn>
         </TableHeader>
         <TableBody>
-          <TableRow key="1">
-            <TableCell>Viaje a europa</TableCell>
-            <TableCell>5,000.00</TableCell>
-            <TableCell>3,500.00</TableCell>
-            <TableCell>12/11/2025</TableCell>
-            <TableCell>
-              <Chip className="bg-green-300">Activa</Chip>
-            </TableCell>
-          </TableRow>
-          <TableRow key="2">
-            <TableCell>Comprar un carro</TableCell>
-            <TableCell>5,000.00</TableCell>
-            <TableCell>3,500.00</TableCell>
-            <TableCell>12/11/2025</TableCell>
-            <TableCell>
-              <Chip className="bg-green-300">Activa</Chip>
-            </TableCell>
-          </TableRow>
-          <TableRow key="3">
-            <TableCell>Fondo de emergencia</TableCell>
-            <TableCell>5,000.00</TableCell>
-            <TableCell>3,500.00</TableCell>
-            <TableCell>12/11/2025</TableCell>
-            <TableCell>
-              <Chip className="bg-green-300">Activa</Chip>
-            </TableCell>
-          </TableRow>
-          <TableRow key="4">
-            <TableCell>Nueva laptop</TableCell>
-            <TableCell>5,000.00</TableCell>
-            <TableCell>3,500.00</TableCell>
-            <TableCell>12/11/2025</TableCell>
-            <TableCell>
-              <Chip className="bg-green-300">Activa</Chip>
-            </TableCell>
-          </TableRow>
-          <TableRow key="5">
-            <TableCell>Regalos de navidad</TableCell>
-            <TableCell>5,000.00</TableCell>
-            <TableCell>3,500.00</TableCell>
-            <TableCell>12/11/2025</TableCell>
-            <TableCell>
-              <Chip className="bg-green-300">Activa</Chip>
-            </TableCell>
-          </TableRow>
-          <TableRow key="6">
-            <TableCell>Viaje con mi familia</TableCell>
-            <TableCell>5,000.00</TableCell>
-            <TableCell>3,500.00</TableCell>
-            <TableCell>12/11/2025</TableCell>
-            <TableCell>
-              <Chip className="bg-green-300">Activa</Chip>
-            </TableCell>
-          </TableRow>
+          {metas.map(meta => (
+            <TableRow key={meta.id}>
+              <TableCell>{meta.nombre}</TableCell>
+              <TableCell>{meta.objetivo.toLocaleString()}</TableCell>
+              <TableCell>{meta.progresoActual.toLocaleString()}</TableCell>
+              <TableCell>{new Date(meta.fechaPropuesta).toLocaleDateString()}</TableCell>
+              <TableCell>
+                <Chip className="bg-green-300">Activa</Chip>
+              </TableCell>
+              <TableCell>
+                <Button
+                  size="sm"
+                  color="danger"
+                  onClick={() => eliminarMeta(meta.id)}
+                >
+                  Eliminar
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
